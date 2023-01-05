@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart';
+import 'package:workout_planner_app/blocs/workouts_cubit.dart';
+import 'package:workout_planner_app/home_screen.dart';
+import 'package:workout_planner_app/loading_screen.dart';
+import 'package:workout_planner_app/models/workout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,35 +17,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Workout Planner',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Workout Planner',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: BlocProvider<WorkoutsCubit>(create: (BuildContext context) {
+          WorkoutsCubit workCubit = WorkoutsCubit();
+          if (workCubit.state.isEmpty) {
+            workCubit.getWorkouts();
+          }
+          return workCubit;
+        }, child: BlocBuilder<WorkoutsCubit, List<Workout>>(
+          builder: (context, state) {
+            return const MyHomePage();
+          },
+        )));
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Workout Planner "),
-      ),
-      body: const Center(child: Text("its working")),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}

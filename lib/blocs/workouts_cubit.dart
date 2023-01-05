@@ -16,4 +16,5 @@ class WorkoutsCubit extends Cubit<List<Workout>> {
     }
     emit(workouts);
   }
+ 
 }
