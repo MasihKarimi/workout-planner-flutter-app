@@ -1,5 +1,7 @@
-class Exercise {
-  Exercise({
+import 'package:equatable/equatable.dart';
+
+class Exercise extends Equatable {
+  const Exercise({
     required this.title,
     required this.prelude,
     required this.duration,
@@ -27,4 +29,10 @@ class Exercise {
         "prelude": prelude,
         "duration": duration,
       };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [title, prelude, duration, index, startTime];
+  @override
+  bool get stringify => true;
 }

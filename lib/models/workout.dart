@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:workout_planner_app/models/exercise.dart';
 
-class Workout {
+class Workout extends Equatable {
   final String? title;
   final List<Exercise> exercises;
   const Workout({required this.title, required this.exercises});
@@ -18,4 +19,11 @@ class Workout {
     return Workout(title: json['title'], exercises: exercises);
   }
   Map<String, dynamic> toJson() => {'title': title, 'exercises': exercises};
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [title, exercises];
+
+  @override
+  bool get stringify => true;
 }
