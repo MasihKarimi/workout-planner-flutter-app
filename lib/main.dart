@@ -4,6 +4,7 @@ import 'package:workout_planner_app/blocs/workout_cubit.dart';
 import 'package:workout_planner_app/blocs/workouts_cubit.dart';
 import 'package:workout_planner_app/home_screen.dart';
 import 'package:workout_planner_app/states/workout_states.dart';
+import 'package:workout_planner_app/workout_edit_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
                 if (state is WorkoutInitial) {
                   return const MyHomePage();
                 } else if (state is WorkoutEditing) {
-                  return Container();
+                  return const WorkoutEditScreen();
                 }
                 return Container();
               },
