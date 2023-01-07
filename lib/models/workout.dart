@@ -30,6 +30,9 @@ class Workout extends Equatable {
     return time;
   }
 
+ Workout copyWith({String? title}) =>
+      Workout(title: title ?? this.title, exercises: exercises);
+
   @override
   // TODO: implement props
   List<Object?> get props => [title, exercises];

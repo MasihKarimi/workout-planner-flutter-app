@@ -34,34 +34,35 @@ class MyHomePage extends StatelessWidget {
         child: BlocBuilder<WorkoutsCubit, List<Workout>>(
           builder: (context, workouts) => ExpansionPanelList.radio(
             children: workouts
-                .map((e) => ExpansionPanelRadio(
-                    value: e,
+                .map((workout) => ExpansionPanelRadio(
+                    value: workout,
                     headerBuilder: (context, isExpanded) => ListTile(
                           visualDensity: const VisualDensity(
                               horizontal: 0,
                               vertical: VisualDensity.maximumDensity),
                           leading: IconButton(
                             onPressed: () {
+                              print("object");
                               BlocProvider.of<WorkoutCubit>(context)
-                                  .editWorkout(e, workouts.indexOf(e));
+                                  .editWorkout(workout, workouts.indexOf(workout));
                             },
                             icon: const Icon(Icons.edit),
                           ),
-                          title: Text(e.title!),
+                          title: Text(workout.title!),
                           trailing:
-                              Text(formatWorkoutTime(e.getTotalTime(), true)),
+                              Text(formatWorkoutTime(workout.getTotalTime(), true)),
                         ),
                     body: ListView.builder(
-                      itemCount: e.exercises.length,
+                      itemCount: workout.exercises.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) => ListTile(
                         visualDensity: const VisualDensity(
                             horizontal: 0,
                             vertical: VisualDensity.maximumDensity),
                         leading: Text(formatWorkoutTime(
-                            e.exercises[index].prelude, true)),
-                        title: Text(e.exercises[index].title),
-                        trailing: Text("${e.exercises[index].duration} Sec"),
+                            workout.exercises[index].prelude, true)),
+                        title: Text(workout.exercises[index].title),
+                        trailing: Text("${workout.exercises[index].duration} Sec"),
                       ),
                     )))
                 .toList(),
