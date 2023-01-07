@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:workout_planner_app/blocs/workout_cubit.dart';
+import 'package:workout_planner_app/edit_exercies_screen.dart';
 import 'package:workout_planner_app/helpers.dart';
 import 'package:workout_planner_app/models/exercise.dart';
 import 'package:workout_planner_app/states/workout_states.dart';
@@ -32,12 +33,18 @@ class _WorkoutEditScreenState extends State<WorkoutEditScreen> {
               itemCount: we.workout!.exercises.length,
               itemBuilder: (context, index) {
                 Exercise exercise = we.workout!.exercises[index];
-                return ListTile(
-                  leading: Text(formatWorkoutTime(exercise.prelude, true)),
-                  title: Text(exercise.title),
-                  trailing: Text(formatWorkoutTime(exercise.duration, true)),
-                  onTap: () => BlocProvider.of<WorkoutCubit>(context).editExercise(index),
-                );
+                if (we.exIndex == index) {
+                  return EditExerciseScreen(
+                      workout: we.workout, index: index, exIndex: we.exIndex);
+                } else {
+                  return ListTile(
+                    leading: Text(formatWorkoutTime(exercise.prelude, true)),
+                    title: Text(exercise.title),
+                    trailing: Text(formatWorkoutTime(exercise.duration, true)),
+                    onTap: () => BlocProvider.of<WorkoutCubit>(context)
+                        .editExercise(index),
+                  );
+                }
               },
             );
           },
