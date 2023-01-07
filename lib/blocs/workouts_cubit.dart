@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:workout_planner_app/models/exercise.dart';
 
 import '../models/workout.dart';
 
-class WorkoutsCubit extends Cubit<List<Workout>> {
+class WorkoutsCubit extends HydratedCubit<List<Workout>> {
   WorkoutsCubit() : super([]);
   getWorkouts() async {
     final List<Workout> workouts = [];
@@ -19,7 +19,7 @@ class WorkoutsCubit extends Cubit<List<Workout>> {
   }
 
   saveWorkout(Workout workout, int index) {
-    Workout newWorkout = Workout(title: workout.title, exercises: []);
+    Workout newWorkout = Workout(title: workout.title, exercises: const []);
     int exIndex = 0;
     int startTime = 0;
     for (var ex in workout.exercises) {
@@ -35,5 +35,26 @@ class WorkoutsCubit extends Cubit<List<Workout>> {
     }
     state[index] = newWorkout;
     emit([...state]);
+  }
+
+  @override
+  List<Workout>? fromJson(Map<String, dynamic> json) {
+    List<Workout> workouts = [];
+    json['workouts'].forEach((el) => workouts.add(Workout.fromJson(el)));
+    return workouts;
+  }
+
+  @override
+  Map<String, dynamic>? toJson(List<Workout> state) {
+    if (state is List<Workout>) {
+      var json = {'workouts': []};
+
+      for (var workout in state) {
+        json['workouts']!.add(workout.toJson());
+      }
+      return json;
+    } else {
+      return null;
+    }
   }
 }
