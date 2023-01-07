@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
+import 'package:workout_planner_app/blocs/workout_cubit.dart';
 import 'package:workout_planner_app/blocs/workouts_cubit.dart';
 import 'package:workout_planner_app/helpers.dart';
 import 'package:workout_planner_app/models/workout.dart';
@@ -33,36 +34,37 @@ class MyHomePage extends StatelessWidget {
         child: BlocBuilder<WorkoutsCubit, List<Workout>>(
           builder: (context, workouts) => ExpansionPanelList.radio(
             children: workouts
-                .map((e) => ExpansionPanelRadio(
-                    value: e,
+                .map((workout) => ExpansionPanelRadio(
+                    value: workout,
                     headerBuilder: (context, isExpanded) => ListTile(
                           visualDensity: const VisualDensity(
                               horizontal: 0,
                               vertical: VisualDensity.maximumDensity),
-                          leading: const IconButton(
-                            onPressed: null,
-                            icon: Icon(Icons.edit),
+                          leading: IconButton(
+                            onPressed: () {
+                              print("object");
+                              BlocProvider.of<WorkoutCubit>(context)
+                                  .editWorkout(workout, workouts.indexOf(workout));
+                            },
+                            icon: const Icon(Icons.edit),
                           ),
-                          title: Text(e.title!),
-                          trailing: Text(formatWorkoutTime(e.getTotalTime(), true)),
+                          title: Text(workout.title!),
+                          trailing:
+                              Text(formatWorkoutTime(workout.getTotalTime(), true)),
                         ),
                     body: ListView.builder(
-                      itemCount: e.exercises.length,
+                      itemCount: workout.exercises.length,
                       shrinkWrap: true,
-                      itemBuilder: (context, index) =>  ListTile(
-                          visualDensity: const VisualDensity(
-                              horizontal: 0,
-                              vertical: VisualDensity.maximumDensity),
-                          leading: Text(formatWorkoutTime(e.exercises[index].prelude, true)),
-                          
-                          title: Text(e.exercises[index].title),
-                          trailing:  Text("${e.exercises[index].duration} Sec"),
-
-                        ),
-                      )
-                    
-                    
-                    ))
+                      itemBuilder: (context, index) => ListTile(
+                        visualDensity: const VisualDensity(
+                            horizontal: 0,
+                            vertical: VisualDensity.maximumDensity),
+                        leading: Text(formatWorkoutTime(
+                            workout.exercises[index].prelude, true)),
+                        title: Text(workout.exercises[index].title),
+                        trailing: Text("${workout.exercises[index].duration} Sec"),
+                      ),
+                    )))
                 .toList(),
           ),
         ),

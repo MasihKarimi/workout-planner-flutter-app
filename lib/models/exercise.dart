@@ -30,6 +30,20 @@ class Exercise extends Equatable {
         "duration": duration,
       };
 
+  // update exercise
+
+  Exercise copyWith(
+          {int? prelude,
+          String? title,
+          int? duration,
+          int? index,
+          int? startTime}) =>
+      Exercise(
+          title: title ?? this.title,
+          prelude: prelude ?? this.prelude,
+          duration: duration ?? this.duration,
+          startTime: startTime ?? this.startTime); 
+
   @override
   // TODO: implement props
   List<Object?> get props => [title, prelude, duration, index, startTime];
