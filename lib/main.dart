@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:workout_planner_app/blocs/workout_cubit.dart';
 import 'package:workout_planner_app/blocs/workouts_cubit.dart';
 import 'package:workout_planner_app/home_screen.dart';
 import 'package:workout_planner_app/states/workout_states.dart';
 import 'package:workout_planner_app/workout_edit_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  //runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+
+  HydratedBlocOverrides.runZoned(() => runApp(const MyApp()), storage: storage);
+  
 }
 
 class MyApp extends StatelessWidget {
