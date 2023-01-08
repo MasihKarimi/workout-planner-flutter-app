@@ -1,3 +1,4 @@
+import 'package:flutter_sound/flutter_sound.dart';
 String formatWorkoutTime(int seconds, bool pod) {
   return (pod)
       ? "${(seconds / 60).floor()} : ${(seconds % 60).toString().padLeft(2, "0")}"
@@ -5,3 +6,5 @@ String formatWorkoutTime(int seconds, bool pod) {
           ? "${(seconds / 60).floor()} : ${(seconds % 60).toString().padLeft(2, "0")}"
           : seconds.toString();
 }
+
+

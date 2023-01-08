@@ -7,6 +7,7 @@ import 'package:workout_planner_app/blocs/workouts_cubit.dart';
 import 'package:workout_planner_app/home_screen.dart';
 import 'package:workout_planner_app/states/workout_states.dart';
 import 'package:workout_planner_app/workout_edit_screen.dart';
+import 'package:workout_planner_app/workout_inprogress_screen.dart';
 
 void main() async {
   //runApp(const MyApp());
@@ -15,7 +16,6 @@ void main() async {
       storageDirectory: await getApplicationDocumentsDirectory());
 
   HydratedBlocOverrides.runZoned(() => runApp(const MyApp()), storage: storage);
-  
 }
 
 class MyApp extends StatelessWidget {
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                 } else if (state is WorkoutEditing) {
                   return const WorkoutEditScreen();
                 }
-                return Container();
+                return const WorkoutInProgressScreen();
               },
             )));
   }

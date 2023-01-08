@@ -42,7 +42,6 @@ class MyHomePage extends StatelessWidget {
                               vertical: VisualDensity.maximumDensity),
                           leading: IconButton(
                             onPressed: () {
-                              print("object");
                               BlocProvider.of<WorkoutCubit>(context)
                                   .editWorkout(workout, workouts.indexOf(workout));
                             },
@@ -51,6 +50,7 @@ class MyHomePage extends StatelessWidget {
                           title: Text(workout.title!),
                           trailing:
                               Text(formatWorkoutTime(workout.getTotalTime(), true)),
+                          onTap: ()=> !isExpanded ? BlocProvider.of<WorkoutCubit>(context).startWorkout(workout):null    
                         ),
                     body: ListView.builder(
                       itemCount: workout.exercises.length,
