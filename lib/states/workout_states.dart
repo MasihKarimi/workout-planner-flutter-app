@@ -7,6 +7,13 @@ abstract class WorkoutState extends Equatable {
   const WorkoutState(this.workout, this.elapsed);
 }
 
+class WorkoutInProgress extends WorkoutState {
+  WorkoutInProgress(Workout? workout, int? elapsed) : super(workout, elapsed);
+
+  @override
+  List<Object?> get props => [workout, elapsed];
+}
+
 class WorkoutInitial extends WorkoutState {
   const WorkoutInitial() : super(null, 0);
   @override
@@ -20,5 +27,5 @@ class WorkoutEditing extends WorkoutState {
       : super(workout, 0);
 
   @override
-  List<Object?> get props => [workout, index,exIndex];
+  List<Object?> get props => [workout, index, exIndex];
 }
